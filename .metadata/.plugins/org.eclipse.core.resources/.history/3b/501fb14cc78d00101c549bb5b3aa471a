@@ -1,0 +1,12 @@
+package modelo;
+
+import java.time.LocalDate;
+
+public class Entrenador extends Persona {
+
+	public Entrenador(String nombre, String apellido, long dni, LocalDate fechaNacimiento,String Ee) {
+		super(nombre, apellido, dni, fechaNacimiento);
+		// TODO Auto-generated constructor stub
+	}
+
+}

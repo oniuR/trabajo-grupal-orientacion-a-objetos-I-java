@@ -1,0 +1,54 @@
+package modelo;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Ganador {
+	LocalDate fecha;
+	Equipo ganador;
+	int goles;
+	
+	public Ganador(LocalDate fecha, Equipo ganador, int goles) {
+		super();
+		this.fecha = fecha;
+		this.ganador = ganador;
+		this.goles = goles;
+	}
+	public LocalDate getFecha() {
+		return fecha;
+	}
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+	public Equipo getGanador() {
+		return ganador;
+	}
+	public void setGanador(Equipo ganador) {
+		this.ganador = ganador;
+	}
+	public int getGoles() {
+		return goles;
+	}
+	public void setGoles(int goles) {
+		this.goles = goles;
+	}
+	private List<int> calcularGoles(Partido partido) {
+		
+		return null;
+	}
+	public static List<Ganador> ganadoresEnFecha(List<Partido> partidos,LocalDate fecha) throws Exception {
+		List<Ganador> ganadores = new ArrayList<Ganador>();
+		boolean fechaEncontrada = false;
+		Partido actual = null;
+		int indice = 0;
+		while (indice < partidos.size()) {
+			actual = partidos.get(indice);
+			if (actual.getFecha().isEqual(fecha)) {	
+				List<int> = calcularGoles(actual);
+			}			
+		}
+			
+		return null;
+	}
+	 
+}

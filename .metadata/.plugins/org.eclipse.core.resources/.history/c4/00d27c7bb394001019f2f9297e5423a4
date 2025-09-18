@@ -1,0 +1,40 @@
+package modelo;
+import java.time.LocalDate;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Partido {
+	private LocalDate fecha;
+	Equipo local;
+	Equipo visitante;
+	String estadio;
+;
+	public Partido(LocalDate fecha, Equipo local, Equipo visitante, String estadio) {
+		this.fecha = fecha;
+		this.local = local;
+		this.visitante = visitante;
+		this.estadio = estadio;
+	}
+	public LocalDate getFecha() {
+		return fecha;
+	}
+	public Equipo getLocal() {
+		return local;
+	}
+	public Equipo getVisitante() {
+		return visitante;
+	}
+	public String getEstadio() {
+		return estadio;
+	}
+	public List<RegistroJugador> getRegistro() {
+		return registro;
+	}
+	public RegistroJugador getRegistroJugador(int indice){
+		return registro.get(indice);
+	}
+	public void addRegistroJugador(RegistroJugador jugador) {
+		registro.add(jugador);
+	}
+}

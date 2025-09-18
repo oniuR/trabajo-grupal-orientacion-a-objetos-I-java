@@ -1,0 +1,85 @@
+package modelo;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Sistema {
+    private List<Torneo> torneos = new ArrayList<Torneo>();
+    private List<Equipo> equipos = new ArrayList<Equipo>();
+    private List<Jugador> jugadores = new ArrayList<Jugador>();
+    private List<Entrenador> entrenadores = new ArrayList<Entrenador>();
+    private List<Partido> partidos = new ArrayList<Partido>();
+    private List<EstadisticaPartido> estadisticas = new ArrayList<EstadisticaPartido>();
+
+    public Torneo crearTorneo(String nombre, LocalDate inicio, LocalDate fin) {
+        Torneo torneo = new Torneo(nombre, inicio, fin);
+        torneos.add(torneo);
+        return torneo;
+    }
+    
+    public void agregarEstadistica(Partido partido,Equipo equipo, int goles, int asistencias, int minutosJugados) {
+		int id = (estadisticas.size()==0) ? 1 : estadisticas.getLast().getId()+1;
+		EstadisticaPartido estadistica = new EstadisticaPartido(id,partido,equipo,goles,asistencias,minutosJugados);
+		estadisticas.add(estadistica);
+	}
+    public void agregarPartido(LocalDate fecha, Equipo local, Equipo visitante, String estadio) {
+    	int id = (partidos.size()==0) ? 1 : partidos.getLast().getId()+1;
+    	Partido partido = new Partido(id, fecha, local, visitante, estadio);
+    	partidos.add(partido);
+    }
+   
+    public void agregarEquipo(String nombre, Entrenador entrenador) {
+    	/* Si el tamaño de la lista es 0, le asigno 1,
+    	 * sino le asigno lo que valga el ultimo +1 */
+    	int id = (equipos.size()==0) ? 1 : equipos.getLast().getId()+1;
+    	try {    		
+    		Equipo equipo = new Equipo(id,nombre,entrenador);
+    		equipos.add(equipo);
+    	} catch (Exception error){
+    		System.out.println("Excepcion: " + error.getMessage());
+    	}
+    }
+    public void agregarJugador(String nombre, String apellido, long dni, LocalDate fechaNacimiento,float estatura,float peso,String posicion,int camiseta) {
+    	/* Si el tamaño de la lista es 0, le asigno 1,
+    	 * sino le asigno lo que valga el ultimo +1 */
+    	int id = (jugadores.size()==0) ? 1 : jugadores.getLast().getId()+1;
+    	try {
+    	Jugador jugador = new Jugador(id, nombre,  apellido,  dni,  fechaNacimiento, estatura, peso, posicion, camiseta);
+    	jugadores.add(jugador);
+    	} catch (Exception error){
+    		System.out.println("Excepcion: " + error.getMessage());
+    	}    	
+    }
+
+    public void agregarEntrenador(String nombre, String apellido, long dni, LocalDate fechaNacimiento,String estrategiaFavorita) {
+    	int id = (entrenadores.size()==0) ? 1 : entrenadores.getLast().getId()+1;
+    	try {
+    		Entrenador entrenador = new Entrenador(id,nombre,apellido,dni,fechaNacimiento,estrategiaFavorita);
+    		entrenadores.add(entrenador);
+    	} catch (Exception error){
+    		System.out.println("Excepcion: " + error.getMessage());
+    	}
+    }
+
+    public List<Entrenador> getEntrenadoresPorTactica(String tactica) throws Exception{
+		List<Entrenador> entrenadores = new ArrayList<Entrenador>();
+    	for(Entrenador actual: this.entrenadores) {
+    		if (actual.getEstrategiaFavorita() == tactica ) {
+    			entrenadores.add(actual);
+    		}
+    	}
+		if (entrenadores.size() == 0) throw new Exception("Error: Tactica no valida");
+		return entrenadores;
+    }
+    public Jugador getJugadoresNacidosEntre(LocalDate inicio,LocalDate fin) {
+		List<Jugador> validos = new ArrayList<Jugador>();
+    	for(Jugador actual: this.jugadores) {
+    		if (actual.getFechaNacimiento().isAfter(inicio) && actual.getFechaNacimiento().isBefore(fin)) {
+    			validos.add(actual);
+    		}
+    	}
+		if (validos.size() == 0) throw new Exception("Error: Fechas no validas.");
+		return validos;
+    }
+}

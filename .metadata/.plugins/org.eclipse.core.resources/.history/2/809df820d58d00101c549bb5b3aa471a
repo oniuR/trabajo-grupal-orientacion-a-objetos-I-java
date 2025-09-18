@@ -1,0 +1,27 @@
+package modelo;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Sistema {
+    private List<Torneo> torneos = new ArrayList<Torneo>();
+    private List<Equipo> equipos = new ArrayList<Equipo>();
+    private List<Jugador> jugadores = new ArrayList<Jugador>();
+    private List<Entrenador> entrenadores = new ArrayList<Entrenador>();
+
+    public Torneo crearTorneo(String nombre, LocalDate inicio, LocalDate fin) {
+        Torneo torneo = new Torneo(nombre, inicio, fin);
+        torneos.add(torneo);
+        return torneo;
+    }
+    public void agregarEquipo(Equipo equipo) {
+        equipos.add(equipo);
+    }
+    public void agregarJugador(Jugador jugador) {
+        jugadores.add(jugador);
+    }
+    public void agregarEntrenador(Entrenador entrenador) {
+    	entrenadores.add(entrenador);
+    }
+}
