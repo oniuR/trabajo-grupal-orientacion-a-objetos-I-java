@@ -9,6 +9,8 @@ public class Sistema {
     private List<Equipo> equipos = new ArrayList<Equipo>();
     private List<Jugador> jugadores = new ArrayList<Jugador>();
     private List<Entrenador> entrenadores = new ArrayList<Entrenador>();
+    private List<Partido> partidos = new ArrayList<Partido>();
+    private List<EstadisticaPartido> estadisticas = new ArrayList<EstadisticaPartido>();
 
     public Torneo crearTorneo(String nombre, LocalDate inicio, LocalDate fin) {
         Torneo torneo = new Torneo(nombre, inicio, fin);
@@ -16,15 +18,23 @@ public class Sistema {
         return torneo;
     }
     
-    
-    
+    public void agregarEstadistica(Partido partido,Equipo equipo, int goles, int asistencias, int minutosJugados) {
+		int id = (estadisticas.size()==0) ? 1 : estadisticas.getLast().getId()+1;
+		EstadisticaPartido estadistica = new EstadisticaPartido(id,partido,equipo,goles,asistencias,minutosJugados);
+		estadisticas.add(estadistica);
+	}
+    public void agregarPartido(LocalDate fecha, Equipo local, Equipo visitante, String estadio) {
+    	int id = (partidos.size()==0) ? 1 : partidos.getLast().getId()+1;
+    	Partido partido = new Partido(id, fecha, local, visitante, estadio);
+    	partidos.add(partido);
+    }
    
-    public void agregarEquipo(String nombre, String abreviatura, Entrenador entrenador) {
+    public void agregarEquipo(String nombre, Entrenador entrenador, LocalDate fechaCreacion) {
     	/* Si el tamaño de la lista es 0, le asigno 1,
     	 * sino le asigno lo que valga el ultimo +1 */
     	int id = (equipos.size()==0) ? 1 : equipos.getLast().getId()+1;
     	try {    		
-    		Equipo equipo = new Equipo(id,nombre,abreviatura,entrenador);
+    		Equipo equipo = new Equipo(id,nombre,entrenador,fechaCreacion);
     		equipos.add(equipo);
     	} catch (Exception error){
     		System.out.println("Excepcion: " + error.getMessage());
@@ -42,7 +52,34 @@ public class Sistema {
     	}    	
     }
 
-    public void agregarEntrenador(Entrenador entrenador) {
-    	entrenadores.add(entrenador);
+    public void agregarEntrenador(String nombre, String apellido, long dni, LocalDate fechaNacimiento,String estrategiaFavorita) {
+    	int id = (entrenadores.size()==0) ? 1 : entrenadores.getLast().getId()+1;
+    	try {
+    		Entrenador entrenador = new Entrenador(id,nombre,apellido,dni,fechaNacimiento,estrategiaFavorita);
+    		entrenadores.add(entrenador);
+    	} catch (Exception error){
+    		System.out.println("Excepcion: " + error.getMessage());
+    	}
+    }
+
+    public List<Entrenador> getEntrenadoresPorTactica(String tactica) throws Exception{
+		List<Entrenador> entrenadores = new ArrayList<Entrenador>();
+    	for(Entrenador actual: this.entrenadores) {
+    		if (actual.getEstrategiaFavorita() == tactica ) {
+    			entrenadores.add(actual);
+    		}
+    	}
+		if (entrenadores.size() == 0) throw new Exception("Error: Tactica no valida");
+		return entrenadores;
+    }
+    public List<Jugador> getJugadoresNacidosEntre(LocalDate inicio,LocalDate fin) throws Exception {
+		List<Jugador> encontrados = new ArrayList<Jugador>();
+    	for(Jugador actual: this.jugadores) {
+    		if (actual.getFechaNacimiento().isAfter(inicio) && actual.getFechaNacimiento().isBefore(fin)) {
+    			encontrados.add(actual);
+    		}
+    	}
+		if (encontrados.size() == 0) throw new Exception("Error: Fechas no validas.");
+		return encontrados;
     }
 }

@@ -1,0 +1,56 @@
+package modelo;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Equipo {
+    private String nombre;
+    private String abreviatura;
+    private List<Jugador> jugadores = new ArrayList<Jugador>();
+    private Entrenador entrenador;
+
+    public Equipo(String nombre, String abreviatura, Entrenador entrenador) {
+    	setAbreviatura(abreviatura);
+
+        this.nombre = nombre;
+        this.entrenador = entrenador;
+    }
+
+	public List<Jugador> getJugadores() {
+		return jugadores;
+	}
+	public Jugador getJugador(int indice) {
+		return jugadores.get(indice);
+	}
+	public void addJugador(Jugador jugador) {
+		jugadores.add(jugador);
+	}
+	public void delJugador(int indice) {
+		jugadores.remove(indice);
+	}
+	public void delJugador(Jugador jugador) {
+		jugadores.remove(jugador);
+	}	
+	
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getAbreviatura() {
+		return abreviatura;
+	}
+	public void setAbreviatura(String abreviatura) {
+        if (abreviatura == null || abreviatura.length() != 3) {
+            throw new IllegalArgumentException("La abreviatura del equipo debe tener 3 caracteres");
+        }
+        this.abreviatura = abreviatura.toUpperCase();
+        }
+	public Entrenador getEntrenador() {
+		return entrenador;
+	}
+	public void setEntrenador(Entrenador entrenador) {
+		this.entrenador = entrenador;
+	}
+}

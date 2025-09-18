@@ -1,0 +1,63 @@
+package modelo;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Ganador {
+	LocalDate fecha;
+	Equipo ganador;
+	int goles;
+	
+	public Ganador(LocalDate fecha, Equipo ganador, int goles) {
+		super();
+		this.fecha = fecha;
+		this.ganador = ganador;
+		this.goles = goles;
+	}
+	public LocalDate getFecha() {
+		return fecha;
+	}
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+	public Equipo getGanador() {
+		return ganador;
+	}
+	public void setGanador(Equipo ganador) {
+		this.ganador = ganador;
+	}
+	public int getGoles() {
+		return goles;
+	}
+	public void setGoles(int goles) {
+		this.goles = goles;
+	}
+
+	public static List<Ganador> ganadoresEnFecha(List<Partido> partidos,LocalDate fecha) throws Exception {
+		List<Ganador> ganadores = new ArrayList<Ganador>();
+		boolean fechaValida = false;
+
+		for (Partido actual : partidos) {
+		    if (actual.getFecha().isEqual(fecha)) {
+		        fechaValida = true;
+		        int[] golesPartido = actual.calcularGoles();
+
+		        Equipo equipoGanador = null;
+		        if (golesPartido[0] > golesPartido[1]) {
+		            equipoGanador = actual.getLocal();
+		        } else if (golesPartido[1] > golesPartido[0]) {
+		            equipoGanador = actual.getVisitante();
+		        }
+
+		        if (equipoGanador != null) {
+		            Ganador ganador = new Ganador(fecha, equipoGanador, 0);
+		            ganadores.add(ganador);
+		        }
+		    }
+		}
+		if (!fechaValida) throw new Exception("Error: En la fecha no hubieron partidos.");
+		if (ganadores.size()==0) throw new Exception("Error: No hay ganadores");
+		return ganadores;
+	}
+	 
+}

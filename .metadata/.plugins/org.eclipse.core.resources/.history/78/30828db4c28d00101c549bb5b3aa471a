@@ -1,0 +1,50 @@
+package modelo;
+
+import java.time.LocalDate;
+
+public class Jugador extends Persona {
+	private float estatura;
+	private float peso;
+	private String posicion;
+	private int camiseta;
+
+	public Jugador(String nombre, String apellido, long dni, LocalDate fechaNacimiento,float estatura,float peso,String posicion,int camiseta) {
+		super(nombre, apellido, dni, fechaNacimiento);
+		this.estatura = estatura;
+		this.peso = peso;
+		this.posicion = posicion;
+		this.camiseta = camiseta;
+	}
+	public float getEstatura() {
+		return estatura;
+	}
+	public void setEstatura(float estatura) {
+		this.estatura = estatura;
+	}
+	public float getPeso() {
+		return peso;
+	}
+	public void setPeso(float peso) {
+		this.peso = peso;
+	}
+	public String getPosicion() {
+		return posicion;
+	}
+	public void setPosicion(String posicion) {
+		this.posicion = posicion;
+	}
+	public int getCamiseta() {
+		return camiseta;
+	}
+	public void setCamiseta(int camiseta) {
+		this.camiseta = camiseta;
+	}
+	@Override
+	public String toString() {
+		return "Jugador ["+ getNombre() + " " + getApellido()
+				+ "\nEstatura=" + estatura + ", peso=" + peso + ", posicion " + posicion + ", camiseta " + camiseta
+				+ "\nDni: " + getDni()
+				+ "\nNacimiento: " + getFechaNacimiento() + ", toString()=" + super.toString()
+				+ ", getClass()=" + getClass()+"]";
+	}
+}

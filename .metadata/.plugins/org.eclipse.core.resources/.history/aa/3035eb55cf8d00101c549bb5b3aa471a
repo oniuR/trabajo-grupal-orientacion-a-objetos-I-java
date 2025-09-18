@@ -1,0 +1,33 @@
+package modelo;
+import java.time.LocalDate;
+import java.util.List;
+
+public class Partido {
+	private LocalDate fecha;
+	Equipo local;
+	Equipo visitante;
+	String estadio;
+	private List<Registro> registro;
+	public Partido(LocalDate fecha, Equipo local, Equipo visitante, String estadio, List<Registro> registro) {
+		this.fecha = fecha;
+		this.local = local;
+		this.visitante = visitante;
+		this.estadio = estadio;
+		this.registro = registro;
+	}
+	public LocalDate getFecha() {
+		return fecha;
+	}
+	public Equipo getLocal() {
+		return local;
+	}
+	public Equipo getVisitante() {
+		return visitante;
+	}
+	public String getEstadio() {
+		return estadio;
+	}
+	public List<Registro> getRegistro() {
+		return registro;
+	}
+}

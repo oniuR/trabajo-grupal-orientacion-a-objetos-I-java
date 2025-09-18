@@ -10,6 +10,7 @@ public class Torneo {
     private List<Partido> partidos = new ArrayList<Partido>();
 	private LocalDate inicio;
 	private LocalDate fin;
+
 	public Torneo(String nombre, LocalDate inicio, LocalDate fin) {
 		this.nombre = nombre;
 		this.inicio = inicio;
@@ -19,8 +20,16 @@ public class Torneo {
 	public List<Equipo> getEquipos() {
 		return equipos;
 	}
-	public Equipo getEquipo(int indice) {
-		return equipos.get(indice);
+	public Equipo getEquipo(int id) throws Exception {
+		Equipo encontrado = null;
+		int actual = 0;
+		while (encontrado == null && actual < equipos.size()) {
+			if (equipos.get(actual).getId() == id) {
+				encontrado = equipos.get(actual);
+			}
+		}
+		if (encontrado == null) throw new Exception("Error: Equipo no encontrado");
+		return encontrado;
 	}
 	public void agregarEquipo(Equipo equipo) {
 		equipos.add(equipo);
@@ -29,12 +38,20 @@ public class Torneo {
 	public List<Partido> getPartidos() {
 		return partidos;
 	}
-	public Partido getPartido(int indice) {
-		return partidos.get(indice);
-	}
 	public void agregarPartido(Partido partido) {
         partidos.add(partido);
     }
+	public Partido getPartido(int id) throws Exception{
+		Partido encontrado = null;
+		int actual = 0;
+		while (encontrado == null && actual < partidos.size()) {
+			if (partidos.get(actual).getId() == id) {
+				encontrado = partidos.get(actual);
+			}
+		}
+		if (encontrado == null) throw new Exception("Error: Partido no encontrado");
+		return encontrado;
+	}
 
 	public String getTemporada() {
 		int mes = inicio.getMonthValue();
@@ -71,5 +88,25 @@ public class Torneo {
 	public void setFin(LocalDate fin) {
 		this.fin = fin;
 	}
+	public List<Ganador> ganadoresEnFecha(LocalDate fecha) throws Exception{
+		List<Ganador> ganadores = new ArrayList<Ganador>();
+		boolean fechaValida = false;
 
+		for (Partido actual : partidos) {
+			if (actual.getFecha().isEqual(fecha)) {
+				fechaValida = true;		
+				try {
+					Ganador ganador = Ganador.calcularGanador(actual);
+					ganadores.add(ganador);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+		}
+		if (!fechaValida)
+			throw new Exception("Error: En la fecha no hubieron partidos.");
+		if (ganadores.size() == 0)
+			throw new Exception("Error: No hay ganadores");
+		return ganadores;
+	}
 }
