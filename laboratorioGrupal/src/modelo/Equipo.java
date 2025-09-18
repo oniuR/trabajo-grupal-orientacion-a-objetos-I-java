@@ -60,6 +60,7 @@ public class Equipo {
 				jugadores.remove(jugadores.get(actual));
 				removido = true;
 			}
+			actual++;
 		}
 		if (!removido) throw new Exception("Error: Jugador no eliminado");
 	}

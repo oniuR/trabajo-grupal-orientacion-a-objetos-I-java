@@ -27,6 +27,7 @@ public class Torneo {
 			if (equipos.get(actual).getId() == id) {
 				encontrado = equipos.get(actual);
 			}
+			actual++;
 		}
 		if (encontrado == null) throw new Exception("Error: Equipo no encontrado");
 		return encontrado;
